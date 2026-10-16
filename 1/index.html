@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subscribe for Unlock</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  font-family: system-ui, Arial, sans-serif;
+  color: #172033;
+  background: linear-gradient(135deg, #eef2ff, #f8fafc);
+}
+
+.card {
+  width: 100%;
+  max-width: 440px;
+  padding: 32px;
+  text-align: center;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 24px;
+  box-shadow: 0 20px 60px #1e293b15;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 20px;
+  border-radius: 24px;
+  background: #eef2ff;
+  font-size: 34px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  letter-spacing: -0.8px;
+}
+
+.description {
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.actions {
+  display: grid;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+button {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: brightness(.96);
+}
+
+button:focus-visible {
+  outline: 3px solid #93c5fd;
+  outline-offset: 3px;
+}
+
+.subscribe {
+  color: white;
+  background: #ef3340;
+}
+
+.unlock {
+  color: white;
+  background: #16a34a;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.message {
+  margin: 20px 0 0;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.hidden-content {
+  margin-top: 24px;
+  padding: 20px;
+  border: 1px solid #bbf7d0;
+  border-radius: 16px;
+  background: #f0fdf4;
+  text-align: left;
+  animation: appear .3s ease;
+}
+
+.hidden-content h2 {
+  margin-top: 0;
+  color: #15803d;
+}
+
+.hidden-content p {
+  color: #475569;
+  line-height: 1.6;
+}
+
+.hidden-content[hidden] {
+  display: none;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 24px 20px;
+  }
+
+  h1 {
+    font-size: 24px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="card">
+  <div class="icon" aria-hidden="true">🔒</div>
+
+  <h1>Exclusive Content</h1>
+
+  <p class="description">
+    Subscribe to unlock exclusive content
+    and discover something new.
+  </p>
+
+  <div class="actions">
+    <button
+      id="subscribeBtn"
+      class="subscribe"
+      type="button">
+      ▶ Subscribe
+    </button>
+
+    <button
+      id="unlockBtn"
+      class="unlock"
+      type="button"
+      disabled>
+      🔓 Unlock Content
+    </button>
+  </div>
+
+  <p id="message" class="message" aria-live="polite">
+    Subscribe first to unlock the content.
+  </p>
+
+  <section
+    id="hiddenContent"
+    class="hidden-content"
+    aria-labelledby="contentTitle"
+    hidden>
+    <h2 id="contentTitle">🎉 Content Unlocked!</h2>
+    <p>
+      Congratulations! You can now access
+      this exclusive content.
+    </p>
+  </section>
+</main>
+
+<script>
+const subscribeBtn =
+  document.getElementById("subscribeBtn");
+
+const unlockBtn =
+  document.getElementById("unlockBtn");
+
+const hiddenContent =
+  document.getElementById("hiddenContent");
+
+const message =
+  document.getElementById("message");
+
+let subscribed = false;
+
+subscribeBtn.addEventListener("click", () => {
+  subscribed = true;
+  unlockBtn.disabled = false;
+  subscribeBtn.textContent = "✓ Subscribed";
+  subscribeBtn.disabled = true;
+
+  message.textContent =
+    "Thank you! Click Unlock Content to continue.";
+});
+
+unlockBtn.addEventListener("click", () => {
+  if (!subscribed) {
+    message.textContent =
+      "Please subscribe before unlocking the content.";
+    return;
+  }
+
+  hiddenContent.hidden = false;
+  unlockBtn.disabled = true;
+
+  message.textContent =
+    "Your content is now unlocked.";
+});
+</script>
+
+</body>
+</html>
